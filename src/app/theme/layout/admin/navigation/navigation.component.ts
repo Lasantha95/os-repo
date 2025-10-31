@@ -1,5 +1,5 @@
 // angular import
-import { Component, output } from '@angular/core';
+import { Component, HostListener, output } from '@angular/core';
 
 // project import
 import { SharedModule } from 'src/app/theme/shared/shared.module';
@@ -24,6 +24,16 @@ export class NavigationComponent {
   constructor() {
     this.windowWidth = window.innerWidth;
     this.navCollapsedMob = false;
+  }
+
+  @HostListener('window:resize', ['$event'])
+  onResize(event: Event) {
+    this.windowWidth = window.innerWidth;
+    if (this.windowWidth < 992 && document.querySelector('app-navigation.pcoded-navbar').classList.contains('navbar-collapsed')) {
+      document.querySelector('app-navigation.pcoded-navbar').classList.remove('navbar-collapsed');
+    } else if (this.windowWidth >= 992 && this.navCollapsed) {
+      document.querySelector('app-navigation.pcoded-navbar').classList.add('navbar-collapsed');
+    }
   }
 
   // public method
