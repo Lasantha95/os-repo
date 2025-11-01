@@ -5,8 +5,9 @@ import { NavigationEnd, Router, RouterModule, Event } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 
 // project import
-import { NavigationItem, NavigationItems } from 'src/app/theme/layout/admin/navigation/navigation';
+import { NavigationItem } from 'src/app/theme/layout/admin/navigation/navigation';
 import { SharedModule } from '../../shared.module';
+import { Api } from 'src/app/services/api';
 
 interface titleType {
   // eslint-disable-next-line
@@ -34,23 +35,37 @@ export class BreadcrumbsComponent {
   navigationList!: titleType[];
 
   // constructor
-  constructor() {
-    this.navigations = NavigationItems;
+  constructor(private api: Api) {
+    // this.navigations = NavigationItems;
     this.type = 'theme1';
     this.setBreadcrumb();
+    this.setNav();
   }
 
+  setNav() {
+    this.api.getCachedNav().subscribe(data => {
+      this.navigations = data;
+      console.log('Navigation:', data);
+      this.updateBreadcrumb();
+    });
+  }
   // public method
   setBreadcrumb() {
     this.route.events.subscribe((router: Event) => {
       if (router instanceof NavigationEnd) {
-        const activeLink = router.url;
-        const breadcrumbList = this.filterNavigation(this.navigations, activeLink);
-        this.navigationList = breadcrumbList;
-        const title = breadcrumbList[breadcrumbList.length - 1]?.title || 'Welcome';
-        this.titleService.setTitle(title + ' | Berry Angular Admin Template');
+        this.updateBreadcrumb();
       }
     });
+  }
+
+  updateBreadcrumb() {
+    const activeLink = this.route.url;
+    const breadcrumbList = this.filterNavigation(this.navigations, activeLink);
+    this.navigationList = breadcrumbList;
+    console.log('breadcrumbList:', breadcrumbList);
+
+    const title = breadcrumbList[breadcrumbList.length - 1]?.title || 'Welcome';
+    this.titleService.setTitle(title + ' | Berry Angular Admin Template');
   }
 
   filterNavigation(navItems: NavigationItem[], activeLink: string): titleType[] {

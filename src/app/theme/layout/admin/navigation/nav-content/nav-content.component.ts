@@ -4,9 +4,10 @@ import { Location } from '@angular/common';
 
 // project import
 import { environment } from 'src/environments/environment';
-import { NavigationItem, NavigationItems } from '../navigation';
+import { NavigationItem } from '../navigation';
 import { SharedModule } from 'src/app/theme/shared/shared.module';
 import { NavGroupComponent } from './nav-group/nav-group.component';
+import { Api } from 'src/app/services/api';
 
 @Component({
   selector: 'app-nav-content',
@@ -29,8 +30,15 @@ export class NavContentComponent {
   NavCollapsedMob = output();
 
   // constructor
-  constructor() {
-    this.navigations = NavigationItems;
+  constructor(private api: Api) {
+    // this.navigations = NavigationItems;
+    this.loadNav();
+  }
+
+  loadNav() {
+    this.api.getNav().subscribe(data => {
+      this.navigations = data;
+    });
   }
 
   fireOutClick() {
