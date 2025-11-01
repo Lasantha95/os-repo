@@ -1,0 +1,8 @@
+[build]
+  publish = "dist"   # Angular build folder
+  functions = "functions"          # Netlify functions folder
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
