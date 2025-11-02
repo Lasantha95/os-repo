@@ -9,10 +9,11 @@ import { NavigationComponent } from './navigation/navigation.component';
 import { ConfigurationComponent } from 'src/app/theme/layout/admin/configuration/configuration.component';
 import { BreadcrumbsComponent } from '../../shared/components/breadcrumbs/breadcrumbs.component';
 import { Footer } from './footer/footer';
+import { SharedModule } from '../../shared/shared.module';
 
 @Component({
   selector: 'app-admin',
-  imports: [NavBarComponent, NavigationComponent, RouterModule, CommonModule, ConfigurationComponent, BreadcrumbsComponent, Footer],
+  imports: [NavBarComponent, NavigationComponent, RouterModule, CommonModule, ConfigurationComponent, BreadcrumbsComponent, Footer, SharedModule],
   templateUrl: './admin.component.html',
   styleUrls: ['./admin.component.scss']
 })
@@ -21,6 +22,14 @@ export class AdminComponent {
   navCollapsed;
   navCollapsedMob: boolean;
   windowWidth: number;
+  is: boolean = true;
+  mt: string = 'admin';
+  search = '';
+  users = [
+    { name: 'Lasantha', city: 'Kandy' },
+    { name: 'Nimal', city: 'Colombo' },
+    { name: 'Kavindu', city: 'Matara' }
+  ];
 
   // constructor
   constructor() {

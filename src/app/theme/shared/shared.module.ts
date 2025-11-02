@@ -12,10 +12,13 @@ import { NgbCollapseModule } from '@ng-bootstrap/ng-bootstrap';
 
 // third party
 import { NgScrollbarModule } from 'ngx-scrollbar';
+import { PermissionDirective } from './directive/permission.directive';
+import { ToggleFullScreenDirective } from './directive/toggle-full-screen.directive';
+import { FilterPipe } from './filters/filter-pipe';
 
 @NgModule({
   declarations: [],
-  imports: [CommonModule, FormsModule, ReactiveFormsModule, CardComponent, NgbModule, NgScrollbarModule, NgbCollapseModule],
-  exports: [CommonModule, FormsModule, ReactiveFormsModule, CardComponent, NgbModule, NgScrollbarModule, NgbCollapseModule]
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, CardComponent, NgbModule, NgScrollbarModule, NgbCollapseModule, PermissionDirective, ToggleFullScreenDirective, FilterPipe],
+  exports: [CommonModule, FormsModule, ReactiveFormsModule, CardComponent, NgbModule, NgScrollbarModule, NgbCollapseModule, PermissionDirective, ToggleFullScreenDirective, FilterPipe]
 })
 export class SharedModule {}

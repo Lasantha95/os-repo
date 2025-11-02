@@ -14,7 +14,24 @@
       <div class="pcoded-inner-content">
         <app-breadcrumb />
         <div class="main-body">
-          <div class="page-wrapper">
+          <div class="page-wrapper" id="myPanel">
+            <!-- testig -->
+
+            <!-- @if(is) { -->
+            <h1 appPermission [moduleType]="mt" (isPermitted)="is=$event" [hidden]="!is">hi</h1>{{is}}
+            <!-- } -->
+            <button (click)="mt==='admin' ? mt='admin1' : mt='admin'" appToggleFullScreen="#myPanel">change permission - {{mt}}</button>
+            <input type="text" [(ngModel)]="search" placeholder="Search name..." />
+            <ul>
+              <li *ngFor="let user of users | filter:search:'name'">
+                {{ user.name }} - {{ user.city }}
+              </li>
+              @for(user of users | filter:search:['name','city']; track user) {
+                <li>{{ user.name }} - {{ user.city }}</li>
+              }
+            </ul>
+            
+            <!-- endtesting -->
             <router-outlet />
           </div>
         </div>
